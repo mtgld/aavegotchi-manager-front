@@ -18,6 +18,97 @@
       </v-row>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
+      <v-row>
+        <v-col md12>
+          <v-card outlined >
+            <v-list-item three-line>
+              <v-list-item-content>
+                <v-list-item-title class="text-h5 mb-1">
+                  Discord Aavegotchi Manager
+                </v-list-item-title>
+                <v-list-item-subtitle>Hey frens this page will explain how the aavegotchi-manager work and guide you to the process of auto-petting and managing your lendings. </v-list-item-subtitle>
+
+              </v-list-item-content>
+
+              <v-list-item-avatar
+                  tile
+                  size="80"
+              >
+                <v-img
+                    alt="lending"
+                    src="https://www.aavegotchi.com/img/brand/sun.png"
+                ></v-img>
+              </v-list-item-avatar>
+            </v-list-item>
+            <v-divider></v-divider>
+            <v-card-text>
+              <p></p>
+              <p>You will have to perform 3 steps (2 optionnal) to make it work : </p>
+              <p>- Join the discord app to be able to use commands -> Reach for <strong>#aavegotchi-manager</strong> channel -> Use command <strong>/register "public-wallet-address"</strong></p>
+              <p>- (Optionnal) Use the <strong>Pet authorization</strong> panel on this page to allow the bot to perform lendings actions on your gotchi(s) (listing, unlisting, claiming)</p>
+              <p>- (Optionnal) Use the <strong>Lending authorization</strong> panel on this page to allow the bot to perform lendings actions on your gotchi(s) (listing, unlisting, claiming)</p>
+              <p>
+                Use <strong>/help</strong> command and let you guide through all the option available
+              </p>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                  text
+                  color="teal accent-4"
+                  @click="reveal = true"
+              >
+                CLIck to reveal available commands
+              </v-btn>
+            </v-card-actions>
+
+            <v-expand-transition>
+              <v-card
+                  v-if="reveal"
+                  class="transition-fast-in-fast-out v-card--reveal"
+                  style="height: 100%;"
+              >
+                <v-card-text class="pb-0">
+                  <v-card-title class="text-h5 mb-1">User Management</v-card-title>
+                  <v-card-text class="text-left">
+                    <p><strong>/regiser-user</strong> : Register the user to be able to use commands</p>
+                    <p><strong>/delete-user</strong> : Unsubscribe from the gotchi manager</p>
+                  </v-card-text>
+                </v-card-text>
+                <v-card-text class="pb-0">
+                  <v-card-title class="text-h5 mb-1">User Informations</v-card-title>
+                  <v-card-text class="text-left">
+                    <p><strong>/user-parameters</strong> : Get current lending parameters for the user</p>
+                    <p><strong>/news</strong> : Get news about current managed gotchis / parcels</p>
+                    <p><strong>/toggle-news</strong> : Activate or deactivate news about current managed gotchis / parcels</p>
+                    <p><strong>/inspect</strong> : Inspect an other user wallet</p>
+                  </v-card-text>
+                </v-card-text>
+                <v-card-text class="pb-0">
+                  <v-card-title class="text-h5 mb-1">Lending Management</v-card-title>
+                  <v-card-text class="text-left">
+                    <p><strong>/resume-lending</strong> : Start or restart lending for all gotchis managed</p>
+                    <p><strong>/stop-lending</strong> : Stop all lending and cancel current listing</p>
+                    <p><strong>/update-lending-options</strong> : Change all gotchis lending parameters</p>
+                    <p><strong>/update-third-party</strong> : Update the third party address</p>
+                    <p><strong>/update-whitelist</strong> : Update the whitelist id</p>
+                    <p><strong>/toggle-lending-channelable</strong> : Stop or resume all lending for gotchi that have channel available</p>
+                  </v-card-text>
+                </v-card-text>
+                <v-card-actions class="pt-0">
+                  <v-btn
+                      text
+                      color="teal accent-4"
+                      @click="reveal = false"
+                  >
+                    Close
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-expand-transition>
+          </v-card>
+        </v-col>
+      </v-row>
+
       <v-row v-if='activated'>
         <v-col md6>
           <v-card outlined >
@@ -133,6 +224,7 @@ export default {
   name: 'App',
   data() {
     return {
+      reveal: false,
       selected: [],
       headers: [
         { text: 'Id', value: 'id'},
@@ -194,11 +286,13 @@ export default {
           this.operatorAddress, gotchiId).call()
     },
     authorizeLending() {
-      this.aavegotchiContract.methods.batchSetLendingOperator(this.operatorAddress,this.selected.map(gotchi => [gotchi.id, true])).send({ from: this.userAddress })
+      const gotchiToAuthorizeLendingOperation = this.selected.filter(gotchi => !gotchi.isLendingOperator)
+      this.aavegotchiContract.methods.batchSetLendingOperator(this.operatorAddress,gotchiToAuthorizeLendingOperation.map(gotchi => [gotchi.id, true])).send({ from: this.userAddress })
       this.selected = []
     },
     revokeLending() {
-      this.aavegotchiContract.methods.batchSetLendingOperator(this.operatorAddress,this.selected.map(gotchi => [gotchi.id, false])).send({ from: this.userAddress })
+      const gotchiToRevokeLendingOperation = this.selected.filter(gotchi => gotchi.isLendingOperator)
+      this.aavegotchiContract.methods.batchSetLendingOperator(this.operatorAddress,gotchiToRevokeLendingOperation.map(gotchi => [gotchi.id, false])).send({ from: this.userAddress })
       this.selected = []
     },
     authorizePetting() {
