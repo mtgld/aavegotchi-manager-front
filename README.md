@@ -1,4 +1,4 @@
-# web3-test-explorer
+# aavegotch-manager-front
 
 ## Project setup
 ```
