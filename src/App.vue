@@ -36,7 +36,7 @@
               >
                 <v-img
                     alt="lending"
-                    src="https://www.aavegotchi.com/img/brand/sun.png"
+                    src="https://app.aavegotchi.com/images/aavegotchi-dark.gif"
                 ></v-img>
               </v-list-item-avatar>
             </v-list-item>
@@ -45,7 +45,7 @@
               <p></p>
               <p>You will have to perform 3 steps (2 optionnal) to make it work : </p>
               <p>- Join the discord app to be able to use commands -> Reach for <strong>#aavegotchi-manager</strong> channel -> Use command <strong>/register "public-wallet-address"</strong></p>
-              <p>- (Optionnal) Use the <strong>Pet authorization</strong> panel on this page to allow the bot to perform lendings actions on your gotchi(s) (listing, unlisting, claiming)</p>
+              <p>- (Optionnal) Use the <strong>Pet authorization</strong> panel on this page to allow the bot to perform auto-petting actions on your gotchi(s)</p>
               <p>- (Optionnal) Use the <strong>Lending authorization</strong> panel on this page to allow the bot to perform lendings actions on your gotchi(s) (listing, unlisting, claiming)</p>
               <p>
                 Use <strong>/help</strong> command and let you guide through all the option available
