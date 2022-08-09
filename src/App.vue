@@ -110,6 +110,13 @@
       </v-row>
 
       <v-row v-if='activated'>
+        <v-select
+            :items="items"
+            v-model="operatorAddress"
+            label="SELECT GUILD"
+        ></v-select>
+      </v-row>
+      <v-row v-if='activated'>
         <v-col md6>
           <v-card outlined >
             <v-list-item three-line>
@@ -160,6 +167,7 @@
               >
                 Revoke
               </v-btn>
+
             </v-card-actions>
           </v-card>
         </v-col>
@@ -225,6 +233,14 @@ export default {
   data() {
     return {
       reveal: false,
+      items: [{
+        text: "GFA - operator address - 0xa9575438851A7eFBa37bC35ebE2be558c4bA3055",
+        value: "0xa9575438851A7eFBa37bC35ebE2be558c4bA3055"
+      },
+      {
+        text: "MMGR - operator address - 0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF",
+        value: "0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF"
+      }],
       selected: [],
       headers: [
         { text: 'Id', value: 'id'},
