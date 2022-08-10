@@ -234,7 +234,7 @@ export default {
     return {
       reveal: false,
       items: [{
-        text: "GFA - operator address - 0xa9575438851A7eFBa37bC35ebE2be558c4bA3055",
+        text: "Soulk's lab - operator address - 0xa9575438851A7eFBa37bC35ebE2be558c4bA3055",
         value: "0xa9575438851A7eFBa37bC35ebE2be558c4bA3055"
       },
       {
