@@ -1,4 +1,4 @@
-# aavegotch-manager-front
+# aavegotchi-manager-front
 
 ## Project setup
 ```
