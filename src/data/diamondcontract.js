@@ -1,5 +1,5 @@
 module.exports ={
-  abi: [
+  abi:[
     {
       "anonymous": false,
       "inputs": [

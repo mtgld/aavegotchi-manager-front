@@ -3,16 +3,19 @@
   <v-container>
     <v-container md12 xs12>
       <v-row>
-        <v-col md3>
-          <span>Wallet address <br> {{ userAddress }} </span>
+        <v-col md2>
+          <span>Wallet address <br> {{userAddressFormatted}} </span>
         </v-col>
-        <v-col md3>
-          <span>Manager access <br> <a href='https://discord.gg/KXcMzCTQzS'>https://discord.gg/KXcMzCTQzS</a></span>
+        <v-col md2>
+          <span>Soulk's Lab <br> <a href='https://discord.gg/KXcMzCTQzS'>Discord</a></span>
         </v-col>
-        <v-col md3>
-          <span>Best Aavegotchi Guild <br> <a href='https://t.co/R5ww4ZDFHp'>Gotchi FArmy Gang</a></span>
+        <v-col md2>
+          <span>Best Aavegotchi Guild <br> <a href='https://thegotchifarmy.org/'>Gotchi FArmy Gang</a></span>
         </v-col>
-        <v-col md3>
+        <v-col md2>
+          <span>Github sources <br> <a href='https://github.com/dfit/aavegotchi-manager-front'>aavegotchi-manager-front</a></span>
+        </v-col>
+        <v-col md2>
           <span>Manager creator <br> <a href='https://twitter.com/soulk__'>https://twitter.com/soulk__</a></span>
         </v-col>
       </v-row>
@@ -27,6 +30,7 @@
                   Discord Aavegotchi Manager
                 </v-list-item-title>
                 <v-list-item-subtitle>Hey frens this page will explain how the aavegotchi-manager work and guide you to the process of auto-petting and managing your lendings. </v-list-item-subtitle>
+                <v-list-item-subtitle>All informations with a complete FAQ in the discord</v-list-item-subtitle>
 
               </v-list-item-content>
 
@@ -43,13 +47,12 @@
             <v-divider></v-divider>
             <v-card-text>
               <p></p>
-              <p>You will have to perform 3 steps (2 optionnal) to make it work : </p>
-              <p>- Join the discord app to be able to use commands -> Reach for <strong>#aavegotchi-manager</strong> channel -> Use command <strong>/register "public-wallet-address"</strong></p>
+              <p>You will have to perform 4 steps (2 optionnal) to make it work : </p>
+              <p>- Use the <strong>Aavegotchi Manager NFT</strong> panel on this page to see if you hold the NFT needed to access the service, if not you can mint it here currently for the cost of <strong>{{nftPrice}} GHST</strong>. It will give you a lifetime access to a lending/pet bot with some nice push notifications in your DM.<br>You'll also be able to participate in the discussion about the next evolution of the manager.</p>
+              <p>- Join the discord app to be able to use commands -> Reach for <strong>#aavegotchi-manager</strong> channel -> Use command <strong>/register your-wallet-address</strong></p>
               <p>- (Optionnal) Use the <strong>Pet authorization</strong> panel on this page to allow the bot to perform auto-petting actions on your gotchi(s)</p>
               <p>- (Optionnal) Use the <strong>Lending authorization</strong> panel on this page to allow the bot to perform lendings actions on your gotchi(s) (listing, unlisting, claiming)</p>
-              <p>
-                Use <strong>/help</strong> command and let you guide through all the option available
-              </p>
+              <p>You can review all available command by clicking on the button below</p>
             </v-card-text>
             <v-card-actions>
               <v-btn
@@ -108,13 +111,67 @@
           </v-card>
         </v-col>
       </v-row>
-
       <v-row v-if='activated'>
-        <v-select
-            :items="items"
-            v-model="operatorAddress"
-            label="SELECT GUILD"
-        ></v-select>
+        <v-col md6>
+          <v-card outlined >
+            <v-list-item three-line>
+              <v-list-item-content>
+                <v-list-item-title class="text-h5 mb-1">
+                  Aavegotchi Manager NFT
+                </v-list-item-title>
+                <v-list-item-subtitle><strong>This NFT will give you full access to the manager (petting / lendings / news)</strong></v-list-item-subtitle>
+                <v-list-item-subtitle><strong>The mint price is {{nftPrice}} GHST (subject to change over time)</strong></v-list-item-subtitle>
+                <v-list-item-subtitle><strong>If you are a guild we can get in touch to install the manager directly on your server and having your own dedicated manager instance with potential specific needs</strong></v-list-item-subtitle>
+                <v-list-item-subtitle>Address of the nft contract : <a href='https://polygonscan.com/address/0x8679b8e5217767d8fa356629cbaefce679b91936'>https://polygonscan.com/address/0x8679b8e5217767d8fa356629cbaefce679b91936</a></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+            <v-card-actions>
+<!--                  TODO: add GHST SPENDING CHECKER-->
+              <v-btn
+                  outlined
+                  rounded
+                  text
+                  v-on:click='authorizeGhstSpending'
+                  :disabled='allowanceGhst > Number(nftPrice)'
+              >
+              Authorize GHST spending
+              </v-btn>
+              <v-btn
+                  outlined
+                  rounded
+                  text
+                  v-on:click='revokeGhstSpending'
+                  :disabled='allowanceGhst < Number(nftPrice)'
+              >
+                Revoke GHST spending
+              </v-btn>
+              <v-btn
+                  outlined
+                  rounded
+                  text
+                  v-on:click='mintNft'
+                  :disabled='allowanceGhst < Number(nftPrice)'
+              >
+                Mint Nft
+              </v-btn>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Spending allowed : <span>{{web3.utils.fromWei(allowanceGhst)}} GHST</span></v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>Nft hold : <span>{{numberOfNftHold}}</span></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row v-if='activated'>
+          <v-select
+              :items="items"
+              v-model="operatorAddress"
+              label="SELECT GUILD"
+          ></v-select>
       </v-row>
       <v-row v-if='activated'>
         <v-col md6>
@@ -139,7 +196,7 @@
               </v-list-item-avatar>
             </v-list-item>
             <v-data-table
-                v-model="selected"
+                v-model="selectedGotchis"
                 :headers="headers"
                 :items="userGotchis"
                 item-key="id"
@@ -153,7 +210,7 @@
                   outlined
                   rounded
                   text
-                  :disabled='userGotchis.length === 0 || selected.filter(gotchi => gotchi.isLendingOperator).length === selected.length'
+                  :disabled='userGotchis.length === 0 || selectedGotchis.filter(gotchi => gotchi.isLendingOperator).length === selectedGotchis.length'
                   v-on:click='authorizeLending'
               >
                 Authorize
@@ -162,7 +219,7 @@
                   outlined
                   rounded
                   text
-                  :disabled='userGotchis.length === 0 || selected.filter(gotchi => !gotchi.isLendingOperator).length === selected.length'
+                  :disabled='userGotchis.length === 0 || selectedGotchis.filter(gotchi => !gotchi.isLendingOperator).length === selectedGotchis.length'
                   v-on:click='revokeLending'
               >
                 Revoke
@@ -227,11 +284,14 @@ import axios from 'axios';
 const Web3 = require('web3');
 let web3 = new Web3(Web3.givenProvider);
 import diamondcontract from "./data/diamondcontract"
+import aavegotchimanagercontract from '@/data/aavegotchimanagercontract';
+import ghstcontract from '@/data/ghstcontract';
 
 export default {
   name: 'App',
   data() {
     return {
+      web3: web3,
       reveal: false,
       items: [{
         text: "Soulk's lab - operator address - 0xa9575438851A7eFBa37bC35ebE2be558c4bA3055",
@@ -241,7 +301,7 @@ export default {
         text: "MMGR - operator address - 0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF",
         value: "0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF"
       }],
-      selected: [],
+      selectedGotchis: [],
       headers: [
         { text: 'Id', value: 'id'},
         { text: 'Name', value: 'name' },
@@ -254,11 +314,17 @@ export default {
         petOperator: true,
         lendingOperator: true
       },
+      numberOfNftHold: 0,
+      allowanceGhst: "0",
       isPetOperatorSet: false,
       userAddress: "Not Connected",
+      userAddressFormatted: "Not Connected",
       userGotchis: [],
       activated: false,
-      aavegotchiContract: new web3.eth.Contract(diamondcontract.abi, diamondcontract.smartContractAddress)
+      aavegotchiContract: new web3.eth.Contract(diamondcontract.abi, diamondcontract.smartContractAddress),
+      aavegotchiManagerContract: new web3.eth.Contract(aavegotchimanagercontract.abi, aavegotchimanagercontract.smartContractAddress),
+      ghstContract: new web3.eth.Contract(ghstcontract.abi, ghstcontract.smartContractAddress),
+      nftPrice: "20"
     }
   },
   async mounted() {
@@ -272,11 +338,14 @@ export default {
   watch: {
     userAddress() {
       this.userGotchis = []
+      this.userAddressFormatted = this.userAddress === "Not Connected" ? this.userAddress : `${this.userAddress.substring(0, 5)}...${this.userAddress.substring(38)}`
       this.isPetOperatorSet = false
       if (this.userAddress.match(/^0x[a-fA-F0-9]{40}$/)) {
         this.activated = true;
         this.isPetOperator()
         this.loadGotchisList()
+        this.allowedGhstSpending()
+        this.getUserNft()
       } else {
         this.activated = false;
       }
@@ -292,6 +361,8 @@ export default {
     watchAavegotchiAccount() {
       this.isPetOperator()
       this.loadGotchisList()
+      this.allowedGhstSpending()
+      this.getUserNft()
     },
     async isPetOperator() {
       this.isPetOperatorSet = await this.aavegotchiContract.methods.isPetOperatorForAll(this.userAddress,
@@ -302,14 +373,14 @@ export default {
           this.operatorAddress, gotchiId).call()
     },
     authorizeLending() {
-      const gotchiToAuthorizeLendingOperation = this.selected.filter(gotchi => !gotchi.isLendingOperator)
+      const gotchiToAuthorizeLendingOperation = this.selectedGotchis.filter(gotchi => !gotchi.isLendingOperator)
       this.aavegotchiContract.methods.batchSetLendingOperator(this.operatorAddress,gotchiToAuthorizeLendingOperation.map(gotchi => [gotchi.id, true])).send({ from: this.userAddress })
-      this.selected = []
+      this.selectedGotchis = []
     },
     revokeLending() {
-      const gotchiToRevokeLendingOperation = this.selected.filter(gotchi => gotchi.isLendingOperator)
+      const gotchiToRevokeLendingOperation = this.selectedGotchis.filter(gotchi => gotchi.isLendingOperator)
       this.aavegotchiContract.methods.batchSetLendingOperator(this.operatorAddress,gotchiToRevokeLendingOperation.map(gotchi => [gotchi.id, false])).send({ from: this.userAddress })
-      this.selected = []
+      this.selectedGotchis = []
     },
     authorizePetting() {
       this.aavegotchiContract.methods.setPetOperatorForAll(this.operatorAddress,
@@ -318,6 +389,22 @@ export default {
     revokePetting() {
       this.aavegotchiContract.methods.setPetOperatorForAll(this.operatorAddress,
           false).send({ from: this.userAddress })
+    },
+    authorizeGhstSpending() {
+      this.ghstContract.methods.approve(aavegotchimanagercontract.smartContractAddress, web3.utils.toWei(this.nftPrice)).send({ from: this.userAddress })
+    },
+    revokeGhstSpending() {
+      this.ghstContract.methods.decreaseAllowance(aavegotchimanagercontract.smartContractAddress, this.allowanceGhst).send({ from: this.userAddress })
+    },
+    async allowedGhstSpending() {
+      this.allowanceGhst = await this.ghstContract.methods.allowance(this.userAddress,
+          aavegotchimanagercontract.smartContractAddress).call()
+    },
+    mintNft() {
+      this.aavegotchiManagerContract.methods.mint(this.userAddress,1, 0).send({ from: this.userAddress })
+    },
+    async getUserNft() {
+      this.numberOfNftHold = await this.aavegotchiManagerContract.methods.balanceOf(this.userAddress).call()
     },
     async loadGotchisList() {
       const query = `query getGotchiFromWallets {
