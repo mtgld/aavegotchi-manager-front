@@ -300,6 +300,10 @@ export default {
       {
         text: "MMGR - operator address - 0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF",
         value: "0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF"
+      },
+      {
+        text: "METAGUILD - operator address - 0xe227ff71c9D94393148926FD81bA3014fe13056b",
+        value: "0xe227ff71c9D94393148926FD81bA3014fe13056b"
       }],
       selectedGotchis: [],
       headers: [
