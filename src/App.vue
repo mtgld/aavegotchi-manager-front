@@ -412,7 +412,7 @@ export default {
     },
     async loadGotchisList() {
       const query = `query getGotchiFromWallets {
-        aavegotchis(where: {originalOwner_: {id_in: ["${this.userAddress}"]}, lending:null}) {
+        aavegotchis(where: {originalOwner_: {id_in: ["${this.userAddress}"]}}) {
           id
           name
           kinship
