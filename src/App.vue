@@ -13,7 +13,7 @@
           <span>Best Aavegotchi Guild <br> <a href='https://metaguild.com/'>Gotchi FArmy Gang</a></span>
         </v-col> -->
         <v-col md2>
-          <span>Github Sources <br> <a href='https://github.com/dfit/aavegotchi-manager-front'>aavegotchi-manager-front</a></span>
+          <span>Sources Code <br> <a href='https://github.com/mtgld/aavegotchi-manager-front'>Github</a></span>
         </v-col>
         <v-col md2>
           <span>Based on Soulk's Source Code <br> <a href='https://twitter.com/soulk__'>https://twitter.com/soulk__</a></span>
