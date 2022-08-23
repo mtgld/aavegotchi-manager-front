@@ -4,24 +4,24 @@
     <v-container md12 xs12>
       <v-row>
         <v-col md2>
-          <span>Wallet address <br> {{userAddressFormatted}} </span>
+          <span>Connected Walelt <br> {{userAddressFormatted}} </span>
         </v-col>
         <v-col md2>
-          <span>Soulk's Lab <br> <a href='https://discord.gg/KXcMzCTQzS'>Discord</a></span>
+          <span>Metaguild<br> <a href='https://discord.gg/metaguild'>Discord</a></span>
+        </v-col>
+        <!-- <v-col md2> 
+          <span>Best Aavegotchi Guild <br> <a href='https://metaguild.com/'>Gotchi FArmy Gang</a></span>
+        </v-col> -->
+        <v-col md2>
+          <span>Github Sources <br> <a href='https://github.com/dfit/aavegotchi-manager-front'>aavegotchi-manager-front</a></span>
         </v-col>
         <v-col md2>
-          <span>Best Aavegotchi Guild <br> <a href='https://thegotchifarmy.org/'>Gotchi FArmy Gang</a></span>
-        </v-col>
-        <v-col md2>
-          <span>Github sources <br> <a href='https://github.com/dfit/aavegotchi-manager-front'>aavegotchi-manager-front</a></span>
-        </v-col>
-        <v-col md2>
-          <span>Manager creator <br> <a href='https://twitter.com/soulk__'>https://twitter.com/soulk__</a></span>
+          <span>Based on Soulk's Source Code <br> <a href='https://twitter.com/soulk__'>https://twitter.com/soulk__</a></span>
         </v-col>
       </v-row>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <v-row>
+      <!-- <v-row>
         <v-col md12>
           <v-card outlined >
             <v-list-item three-line>
@@ -110,8 +110,8 @@
             </v-expand-transition>
           </v-card>
         </v-col>
-      </v-row>
-      <v-row v-if='activated'>
+      </v-row> -->
+      <!-- <v-row v-if='activated'>
         <v-col md6>
           <v-card outlined >
             <v-list-item three-line>
@@ -126,7 +126,6 @@
               </v-list-item-content>
             </v-list-item>
             <v-card-actions>
-<!--                  TODO: add GHST SPENDING CHECKER-->
               <v-btn
                   outlined
                   rounded
@@ -165,24 +164,25 @@
             </v-card-actions>
           </v-card>
         </v-col>
-      </v-row>
-      <v-row v-if='activated'>
+      </v-row> -->
+
+      <!-- <v-row v-if='activated'>
           <v-select
               :items="items"
               v-model="operatorAddress"
               label="SELECT GUILD"
           ></v-select>
-      </v-row>
+      </v-row> -->
       <v-row v-if='activated'>
         <v-col md6>
           <v-card outlined >
             <v-list-item three-line>
               <v-list-item-content>
                 <v-list-item-title class="text-h5 mb-1">
-                  Lending authorization
+                  Setting Lending Operator
                 </v-list-item-title>
-                <v-list-item-subtitle>Authorize the bot to manage your lendings based on your own settings</v-list-item-subtitle>
-                <v-list-item-subtitle><strong>Your gotchi need to be in your wallet and not borrowed to appears in this list</strong></v-list-item-subtitle>
+                <v-list-item-subtitle>Please select gotchis you want Metaguild to manage for you. You need to send one transaction to the network, which will authorize the address controlled by the Metaguild team to manage listings of your gotchis. Managing listing is the only permission operator will get.</v-list-item-subtitle>
+                <v-list-item-subtitle><strong>Your gotchi need to be in your wallet and not borrowed to appears in this list.</strong></v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-avatar
@@ -190,8 +190,8 @@
                   size="80"
               >
                 <v-img
-                    alt="lending"
-                    src="https://app.aavegotchi.com/images/lending/iconMid.svg"
+                    alt="metaguild"
+                    src="https://pbs.twimg.com/profile_images/1559524780402958336/EJoJy-nF_400x400.jpg"
                 ></v-img>
               </v-list-item-avatar>
             </v-list-item>
@@ -228,7 +228,7 @@
             </v-card-actions>
           </v-card>
         </v-col>
-        <v-col md6>
+        <!-- <v-col md6>
           <v-card outlined >
             <v-list-item three-line>
               <v-list-item-content>
@@ -272,7 +272,7 @@
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-container>
   </v-container>
@@ -284,7 +284,7 @@ import axios from 'axios';
 const Web3 = require('web3');
 let web3 = new Web3(Web3.givenProvider);
 import diamondcontract from "./data/diamondcontract"
-import aavegotchimanagercontract from '@/data/aavegotchimanagercontract';
+// import aavegotchimanagercontract from '@/data/aavegotchimanagercontract';
 import ghstcontract from '@/data/ghstcontract';
 
 export default {
@@ -294,16 +294,16 @@ export default {
       web3: web3,
       reveal: false,
       items: [{
-        text: "Soulk's lab - operator address - 0xa9575438851A7eFBa37bC35ebE2be558c4bA3055",
-        value: "0xa9575438851A7eFBa37bC35ebE2be558c4bA3055"
-      },
-      {
-        text: "MMGR - operator address - 0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF",
-        value: "0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF"
-      },
-      {
-        text: "METAGUILD - operator address - 0xe227ff71c9D94393148926FD81bA3014fe13056b",
-        value: "0xe227ff71c9D94393148926FD81bA3014fe13056b"
+        text: "METAGUILD - operator address - 0xc0e8b0E7981E2E254D4c22B6A0BC4223933A2D1d",
+        value: "0xc0e8b0E7981E2E254D4c22B6A0BC4223933A2D1d"
+      // },
+      // {
+      //   text: "MMGR - operator address - 0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF",
+      //   value: "0xa4b7ED1cd909A9741c8C18432cffaF3632951AbF"
+      // },
+      // {
+      //   text: "Soulk's lab - operator address - 0xa9575438851A7eFBa37bC35ebE2be558c4bA3055",
+      //   value: "0xa9575438851A7eFBa37bC35ebE2be558c4bA3055"
       }],
       selectedGotchis: [],
       headers: [
@@ -313,7 +313,7 @@ export default {
         { text: 'BRS', value: 'baseRarityScore' },
         { text: 'isLendingOperator', value: 'isLendingOperator' }
       ],
-      operatorAddress: "0xa9575438851A7eFBa37bC35ebE2be558c4bA3055",
+      operatorAddress: "0xc0e8b0E7981E2E254D4c22B6A0BC4223933A2D1d",
       operatorPanel : {
         petOperator: true,
         lendingOperator: true
@@ -326,9 +326,9 @@ export default {
       userGotchis: [],
       activated: false,
       aavegotchiContract: new web3.eth.Contract(diamondcontract.abi, diamondcontract.smartContractAddress),
-      aavegotchiManagerContract: new web3.eth.Contract(aavegotchimanagercontract.abi, aavegotchimanagercontract.smartContractAddress),
+      // aavegotchiManagerContract: new web3.eth.Contract(aavegotchimanagercontract.abi, aavegotchimanagercontract.smartContractAddress),
       ghstContract: new web3.eth.Contract(ghstcontract.abi, ghstcontract.smartContractAddress),
-      nftPrice: "20"
+      // nftPrice: "20"
     }
   },
   async mounted() {
@@ -346,10 +346,10 @@ export default {
       this.isPetOperatorSet = false
       if (this.userAddress.match(/^0x[a-fA-F0-9]{40}$/)) {
         this.activated = true;
-        this.isPetOperator()
+        // this.isPetOperator()
         this.loadGotchisList()
-        this.allowedGhstSpending()
-        this.getUserNft()
+        // this.allowedGhstSpending()
+        // this.getUserNft()
       } else {
         this.activated = false;
       }
@@ -363,10 +363,10 @@ export default {
       }
     },
     watchAavegotchiAccount() {
-      this.isPetOperator()
+      // this.isPetOperator()
       this.loadGotchisList()
-      this.allowedGhstSpending()
-      this.getUserNft()
+      // this.allowedGhstSpending()
+      // this.getUserNft()
     },
     async isPetOperator() {
       this.isPetOperatorSet = await this.aavegotchiContract.methods.isPetOperatorForAll(this.userAddress,
@@ -386,30 +386,30 @@ export default {
       this.aavegotchiContract.methods.batchSetLendingOperator(this.operatorAddress,gotchiToRevokeLendingOperation.map(gotchi => [gotchi.id, false])).send({ from: this.userAddress })
       this.selectedGotchis = []
     },
-    authorizePetting() {
-      this.aavegotchiContract.methods.setPetOperatorForAll(this.operatorAddress,
-          true).send({ from: this.userAddress })
-    },
-    revokePetting() {
-      this.aavegotchiContract.methods.setPetOperatorForAll(this.operatorAddress,
-          false).send({ from: this.userAddress })
-    },
-    authorizeGhstSpending() {
-      this.ghstContract.methods.approve(aavegotchimanagercontract.smartContractAddress, web3.utils.toWei(this.nftPrice)).send({ from: this.userAddress })
-    },
-    revokeGhstSpending() {
-      this.ghstContract.methods.decreaseAllowance(aavegotchimanagercontract.smartContractAddress, this.allowanceGhst).send({ from: this.userAddress })
-    },
-    async allowedGhstSpending() {
-      this.allowanceGhst = await this.ghstContract.methods.allowance(this.userAddress,
-          aavegotchimanagercontract.smartContractAddress).call()
-    },
-    mintNft() {
-      this.aavegotchiManagerContract.methods.mint(this.userAddress,1, 0).send({ from: this.userAddress })
-    },
-    async getUserNft() {
-      this.numberOfNftHold = await this.aavegotchiManagerContract.methods.balanceOf(this.userAddress).call()
-    },
+    // authorizePetting() {
+    //   this.aavegotchiContract.methods.setPetOperatorForAll(this.operatorAddress,
+    //       true).send({ from: this.userAddress })
+    // },
+    // revokePetting() {
+    //   this.aavegotchiContract.methods.setPetOperatorForAll(this.operatorAddress,
+    //       false).send({ from: this.userAddress })
+    // },
+    // authorizeGhstSpending() {
+    //   this.ghstContract.methods.approve(aavegotchimanagercontract.smartContractAddress, web3.utils.toWei(this.nftPrice)).send({ from: this.userAddress })
+    // },
+    // revokeGhstSpending() {
+    //   this.ghstContract.methods.decreaseAllowance(aavegotchimanagercontract.smartContractAddress, this.allowanceGhst).send({ from: this.userAddress })
+    // },
+    // async allowedGhstSpending() {
+    //   this.allowanceGhst = await this.ghstContract.methods.allowance(this.userAddress,
+    //       aavegotchimanagercontract.smartContractAddress).call()
+    // },
+    // mintNft() {
+    //   this.aavegotchiManagerContract.methods.mint(this.userAddress,1, 0).send({ from: this.userAddress })
+    // },
+    // async getUserNft() {
+    //   this.numberOfNftHold = await this.aavegotchiManagerContract.methods.balanceOf(this.userAddress).call()
+    // },
     async loadGotchisList() {
       const query = `query getGotchiFromWallets {
         aavegotchis(where: {originalOwner_: {id_in: ["${this.userAddress}"]}}) {
@@ -440,6 +440,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
 }
 </style>
