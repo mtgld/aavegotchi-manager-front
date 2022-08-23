@@ -4,7 +4,7 @@
     <v-container md12 xs12>
       <v-row>
         <v-col md2>
-          <span>Connected Walelt <br> {{userAddressFormatted}} </span>
+          <span>Connected Wallet <br> {{userAddressFormatted}} </span>
         </v-col>
         <v-col md2>
           <span>Metaguild<br> <a href='https://discord.gg/metaguild'>Discord</a></span>
@@ -13,7 +13,7 @@
           <span>Best Aavegotchi Guild <br> <a href='https://metaguild.com/'>Gotchi FArmy Gang</a></span>
         </v-col> -->
         <v-col md2>
-          <span>Sources Code <br> <a href='https://github.com/mtgld/aavegotchi-manager-front'>Github</a></span>
+          <span>Source Code <br> <a href='https://github.com/mtgld/aavegotchi-manager-front'>Github</a></span>
         </v-col>
         <v-col md2>
           <span>Based on Soulk's Source Code <br> <a href='https://twitter.com/soulk__'>https://twitter.com/soulk__</a></span>
