@@ -196,12 +196,14 @@
               </v-list-item-avatar>
             </v-list-item>
             <v-data-table
+                dense
                 v-model="selectedGotchis"
                 :headers="headers"
                 :items="userGotchis"
                 item-key="id"
                 show-select
                 class="elevation-1"
+                :sort-by="['isLendingOperator']"
             >
             </v-data-table>
 
@@ -412,7 +414,7 @@ export default {
     // },
     async loadGotchisList() {
       const query = `query getGotchiFromWallets {
-        aavegotchis(where: {originalOwner_: {id_in: ["${this.userAddress}"]}}) {
+        aavegotchis(first: 1000, where: {originalOwner_: {id_in: ["${this.userAddress}"]}}) {
           id
           name
           kinship
