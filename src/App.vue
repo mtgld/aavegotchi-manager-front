@@ -421,7 +421,7 @@ export default {
           baseRarityScore
         }
       }`
-      let gotchisOfOwner = (await axios.post("https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic", { query: query })).data.data?.aavegotchis
+      let gotchisOfOwner = (await axios.post("https://subgraph.satsuma-prod.com/tWYl5n5y04oz/aavegotchi/aavegotchi-core-matic/api", { query: query })).data.data?.aavegotchis
       let userGotchis = []
       if (gotchisOfOwner !== null && gotchisOfOwner !== undefined ) {
         for(const gotchi of gotchisOfOwner) {
